@@ -6,18 +6,18 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 
 app = Flask(__name__)
+app.config.from_pyfile('application.cfg')
 
-base_url = "YOUR_IRC_SERVER"
-base_path = "LOG_DIRECTORY"
-
-channels = ["CHANNEL1", "CHANNEL2", "CHANNEL3"]
-
+base_url = app.config['BASE_URL']
+base_path = app.config['BASE_PATH']
+channels = app.config['CHANNELS']
 
 @app.route('/')
 def index():
-    title = "%s Log Highligher" % base_url
+    title = "%s" % base_url
+    page_title = "Log Highlighter"
     body = Markup("<p>Use the top menu to select a channel.</p>")
-    return render_template('bootstrap.html', title=title, channels=channels, body=body)
+    return render_template('bootstrap.html', page_title=page_title, lead=title, title=title, channels=channels, body=body)
 
 
 @app.route('/<channel>')
@@ -36,9 +36,10 @@ def show_channel(channel):
 
     irc_host.close()
 
+    page_title = "#%s" % channel
     title = "Channel: %s" % channel
     body = Markup(output)
-    return render_template('bootstrap.html', title=title, channels=channels, body=body)
+    return render_template('bootstrap.html', page_title=page_title, title=title, channels=channels, body=body)
 
 
 @app.route('/<channel>/<log_file>')
@@ -47,15 +48,16 @@ def show_log(channel, log_file):
     irc_host = httplib.HTTPConnection(base_url)
     irc_host.request("GET", log_path)
     resp = irc_host.getresponse()
-    log_file = resp.read()
+    log_body = resp.read()
     irc_host.close()
 
-    body = Markup(highlight(log_file, get_lexer_by_name('irc'), HtmlFormatter()))
+    body = Markup(highlight(log_body, get_lexer_by_name('irc'), HtmlFormatter()))
     title = "Channel: %s" % channel
-    subtitle = "Log: %s" % log_file
-    return render_template('bootstrap.html', title=title, subtitle=subtitle, channel=channel, channels=channels, body=body)
+    page_title = "#%s" % channel
+    lead = "Log: %s" % log_file
+    return render_template('bootstrap.html', title=title, page_title=page_title, lead=lead, channel=channel, channels=channels, body=body)
 
 
 if __name__ == '__main__':
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0')

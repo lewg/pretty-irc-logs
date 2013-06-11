@@ -9,7 +9,11 @@ Use `easy_install` to install the dependencies:
     easy_install Flask
     easy_install Pygments
 
-In `log_highlighter.py` adjust `base_url`, `base_path` and `channels` to your setup.
+Next, create the config file `application.cfg` with the contents below (adjusted for your environment):
+
+    BASE_URL = "your.irc.server"
+    BASE_PATH = "your_log_path"
+    CHANNELS = ["channel1", "channel2"]
 
 Run `python log_highlighter` and visit `http://localhost:5000`
 
