@@ -1,6 +1,6 @@
 # Pretty IRC Logs
 
-A simple [Flask](http://flask.pocoo.org/) application that uses [Pygments](http://pygments.org/) to highlight your IRC logs, and [Twitter's Bootstrap](http://twitter.github.com/bootstrap/index.html) to make the page full of responsive goodness. Admittedly, tailored exactly to my specific use case, but who knows, maybe your setup is just like mine! 
+A simple [Flask](http://flask.pocoo.org/) application that uses [Pygments](http://pygments.org/) to highlight your IRC logs, and [Twitter's Bootstrap](http://twitter.github.com/bootstrap/index.html) to make the page full of responsive goodness. Admittedly, tailored exactly to my specific use case, but who knows, maybe your setup is just like mine!
 
 ## Setup
 
@@ -14,12 +14,13 @@ Next, create the config file `application.cfg` with the contents below (adjusted
     BASE_URL = "your.irc.server"
     BASE_PATH = "your_log_path"
     CHANNELS = ["channel1", "channel2"]
+    TIMEOUT = 10
 
 Run `python log_highlighter` and visit `http://localhost:5000`
 
 ## License
 
-Copyright 2012 Lewis J. Goettner, III
+Copyright 2014 Lewis J. Goettner, III
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

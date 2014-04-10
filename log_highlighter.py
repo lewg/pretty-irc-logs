@@ -11,6 +11,7 @@ app.config.from_pyfile('application.cfg')
 base_url = app.config['BASE_URL']
 base_path = app.config['BASE_PATH']
 channels = app.config['CHANNELS']
+timeout = app.config['TIMEOUT'] if app.config.has_key('TIMEOUT') else 10
 
 @app.route('/')
 def index():
@@ -25,7 +26,7 @@ def show_channel(channel):
     output = ""
 
     log_path = "/%s/%s/" % (base_path, channel)
-    irc_host = httplib.HTTPConnection(base_url)
+    irc_host = httplib.HTTPConnection(base_url, timeout=timeout)
     irc_host.request("GET", log_path)
     resp = irc_host.getresponse()
     log_index = resp.read()
