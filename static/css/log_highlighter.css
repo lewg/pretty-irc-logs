@@ -61,6 +61,4 @@
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
 
-@media (min-width: 980px) { 
-	body { padding-top: 42px; /* 42px to make the container go all the way to the bottom of the topbar */ }
-}
+body { padding-top: 50px;  }
